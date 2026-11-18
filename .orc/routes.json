@@ -1,0 +1,8 @@
+[
+  {"method": "POST", "path": "/counters/{id}/steps", "handler": "appendStep"},
+  {"method": "GET", "path": "/counters/{id}/steps", "handler": "listSteps"},
+  {"method": "GET", "path": "/counters/{id}", "handler": "getCounter"},
+  {"method": "DELETE", "path": "/counters/{id}", "handler": "resetCounter"},
+  {"method": "GET", "path": "/healthz", "handler": "live"},
+  {"method": "GET", "path": "/readyz", "handler": "ready"}
+]

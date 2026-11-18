@@ -1,0 +1,32 @@
+# The service's objectives, in its own words: what each route promises,
+# and by how much, over a week of it.
+- name: append-availability
+  statement: Appending a step to a counter succeeds almost always.
+  route: POST /counters/{id}/steps
+  comparison: ">="
+  target: 99.5
+  window: 7d
+- name: steps-availability
+  statement: Reading a counter's steps back succeeds almost always.
+  route: GET /counters/{id}/steps
+  comparison: ">="
+  target: 99.5
+  window: 7d
+- name: tally-availability
+  statement: Reading a counter's tally succeeds almost always.
+  route: GET /counters/{id}
+  comparison: ">="
+  target: 99.5
+  window: 7d
+- name: ready-availability
+  statement: The readiness probe answers almost always.
+  route: GET /readyz
+  comparison: ">="
+  target: 99.5
+  window: 7d
+- name: append-latency
+  statement: Appending a step answers quickly.
+  route: POST /counters/{id}/steps
+  comparison: "<="
+  target: 0.5
+  window: 7d

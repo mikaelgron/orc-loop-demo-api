@@ -1,0 +1,19 @@
+# The service's checks: the module fetch that fills the cache every
+# other check reads (the two dependencies live in go.mod — the chi router
+# and the bbolt store), then the verifying pair — build against the
+# fetched modules, and the tests with their JUnit report for the loop to
+# read back. The declaration's shapes are docs/SPEC.md §8.15's.
+toolchain: go
+
+checks:
+  deps:
+    run: GOMODCACHE=$PWD/.deps go mod download
+    network: modules      # the member's module fetch, through the egress
+    cache:                # what the fetch fills, kept for the others
+      key: [go.sum]
+      path: .deps
+  build:
+    run: GOMODCACHE=$PWD/.deps go build ./...
+  test:
+    run: GOMODCACHE=$PWD/.deps gotestsum --format testname --junitfile junit.xml -- ./...
+    report: junit.xml
